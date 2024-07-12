@@ -1,4 +1,4 @@
-.PHONY: clang linux dev
+.PHONY: clang linux qemu dev
 
 clang:
 	$(MAKE) -C clang
@@ -6,6 +6,9 @@ clang:
 linux:
 	$(MAKE) -C linux
 
-dev: clang
+qemu:
+	$(MAKE) -C qemu
+
+dev: clang qemu
 	$(MAKE) -C linux dev
 	$(MAKE) -C dev
