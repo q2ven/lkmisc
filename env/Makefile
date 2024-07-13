@@ -1,4 +1,4 @@
-.PHONY: clang linux qemu dev
+.PHONY: clang linux qemu syzkaller dev
 
 clang:
 	$(MAKE) -C clang
@@ -8,6 +8,9 @@ linux:
 
 qemu:
 	$(MAKE) -C qemu
+
+syzkaller:
+	$(MAKE) -C syzkaller
 
 dev: clang qemu
 	$(MAKE) -C linux dev
