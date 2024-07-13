@@ -1,3 +1,5 @@
+ARCH := $(shell uname -m)
+
 LKMISCDIR := $(shell echo $$PWD)
 BASEDIR := $$HOME/kernel
 TOOLSDIR := $(BASEDIR)/tools

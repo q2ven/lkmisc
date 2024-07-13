@@ -2,7 +2,7 @@ include ../lib.mk
 
 .ONESHELL:
 
-.PHONY: all clone update worktree package dev
+.PHONY: all clone update worktree package dev syz
 
 all: update
 
@@ -41,3 +41,22 @@ package:
 	$(MAKE) -C pahole
 
 dev: worktree package
+
+SYZENV := syz_$(NAME)_$(REMOTE)
+SYZENVDIR := $(BASEDIR)/$(SYZENV)
+
+syz: update package
+	$(call create_worktree,$(SYZENV),$(REMOTE)/main)
+
+	cd $(SYZENVDIR)
+	git pull
+
+	cp $(LKMISCDIR)/config/$(NAME)_$(ARCH) .config
+
+	if [[ $(NAME) =~ "kmsan" ]] || [[ $(ARCH) =~ "aarch64" ]]; then
+		$(MAKE) CC=clang -j $(shell nproc)
+	else
+		$(MAKE) -j $(shell nproc)
+	fi
+
+	cp .config $(LKMISCDIR)/config/$(NAME)_$(ARCH)

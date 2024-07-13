@@ -1,4 +1,4 @@
-.PHONY: clang linux qemu syzkaller dev
+.PHONY: clang linux qemu syzkaller dev $(SYZ)
 
 clang:
 	$(MAKE) -C clang
@@ -16,3 +16,8 @@ dev: clang qemu
 	$(MAKE) -C syzkaller dev
 	$(MAKE) -C linux dev
 	$(MAKE) -C dev
+
+SYZ :=
+
+$(SYZ):
+	$(MAKE) -C linux NAME=$@ REMOTE=net-next syz
