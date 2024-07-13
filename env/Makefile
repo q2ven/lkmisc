@@ -17,7 +17,7 @@ dev: clang qemu
 	$(MAKE) -C linux dev
 	$(MAKE) -C dev
 
-SYZ :=
+SYZ := kmsan
 
 $(SYZ):
 	$(MAKE) -C linux NAME=$@ REMOTE=net-next syz
