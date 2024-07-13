@@ -21,3 +21,4 @@ SYZ :=
 
 $(SYZ):
 	$(MAKE) -C linux NAME=$@ REMOTE=net-next syz
+	$(MAKE) -C syzkaller NAME=$@ REMOTE=net-next syz

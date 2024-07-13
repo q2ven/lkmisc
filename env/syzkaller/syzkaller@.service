@@ -1,0 +1,10 @@
+[Unit]
+Description=syzkaller targeted at %i
+
+[Service]
+Environment=/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+ExecStart=/usr/local/bin/syz-manager -config BASEDIR/%i/syz/syz.cfg
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

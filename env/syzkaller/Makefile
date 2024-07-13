@@ -2,7 +2,7 @@ include ../lib.mk
 
 .ONESHELL:
 
-.PHONY: all clone update __docker docker build install dev
+.PHONY: all clone update __docker docker build install dev syz
 
 all: install
 
@@ -72,3 +72,21 @@ endef
 
 dev: update docker
 	$(call create_rootfs,$(BASEDIR))
+
+SYZNAME := syz_$(NAME)_$(REMOTE)
+SYZDIR := $(BASEDIR)/$(SYZNAME)
+
+syz: install
+	mkdir -p $(SYZDIR)/syz/workdir
+
+	$(call create_rootfs,$(SYZDIR)/syz)
+
+	sed -e s.SYZDIR.$(SYZDIR). \
+		-e s.SYZNAME.$(SYZNAME). \
+		$(LKMISCDIR)/config/syz_$(ARCH).cfg > $(SYZDIR)/syz/syz.cfg
+
+	sed -e s.BASEDIR.$(BASEDIR). \
+		$(LKMISCDIR)/syzkaller@.service | sudo tee /etc/systemd/system/syzkaller@.service
+
+	sudo systemctl enable syzkaller@$(SYZNAME).service
+	sudo systemctl start syzkaller@$(SYZNAME).service
