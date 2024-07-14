@@ -14,9 +14,13 @@ clone:
 	cd $(TOOLSDIR)
 	git clone https://github.com/google/syzkaller.git
 
+	cd $(BUILDDIR)
+	cp -r $(LKMISCDIR)/patch ./
+	git am --3way patch/*
+
 update: clone
 	cd $(BUILDDIR)
-	git pull
+	git pull --rebase
 
 __docker:
 	sudo dnf install -y docker

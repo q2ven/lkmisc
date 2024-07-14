@@ -1,0 +1,26 @@
+From 230239641124875b739adc67503ef7bfcfe052d5 Mon Sep 17 00:00:00 2001
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
+Date: Sat, 13 Jul 2024 22:47:26 +0000
+Subject: [PATCH 3/3] DO NOT UPSTREAM: vm: qemu: Turn off the restrict option.
+
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+---
+ vm/qemu/qemu.go | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/vm/qemu/qemu.go b/vm/qemu/qemu.go
+index ca7e9a48b..7a33ec57e 100644
+--- a/vm/qemu/qemu.go
++++ b/vm/qemu/qemu.go
+@@ -508,7 +508,7 @@ func (inst *instance) buildQemuArgs() ([]string, error) {
+ 	args = append(args, splitArgs(inst.cfg.QemuArgs, templateDir, inst.index)...)
+ 	args = append(args,
+ 		"-device", inst.cfg.NetDev+",netdev=net0",
+-		"-netdev", fmt.Sprintf("user,id=net0,restrict=on,hostfwd=tcp:127.0.0.1:%v-:22", inst.Port),
++		"-netdev", fmt.Sprintf("user,id=net0,hostfwd=tcp:127.0.0.1:%v-:22", inst.Port),
+ 	)
+ 	if inst.image == "9p" {
+ 		args = append(args,
+-- 
+2.47.1
+
