@@ -38,5 +38,6 @@ worktree: update
 
 package:
 	sudo dnf install -y bison elfutils-devel flex gcc ncurses-devel openssl-devel zlib-devel
+	$(MAKE) -C pahole
 
 dev: worktree package

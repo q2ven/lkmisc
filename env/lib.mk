@@ -1,4 +1,5 @@
 BASEDIR := $$HOME/kernel
+TOOLSDIR := $(BASEDIR)/tools
 
 define create_basedir
 	@if [ ! $(BASEDIR) ]; then
@@ -6,7 +7,7 @@ define create_basedir
 		exit 1
 	fi
 
-	mkdir -p $(BASEDIR)
+	mkdir -p $(TOOLSDIR)
 endef
 
 define check_dir
@@ -14,5 +15,18 @@ define check_dir
 
 	if [ -d ${1} ]; then
 		exit
+	fi
+endef
+
+LDCONFDIR := /etc/ld.so.conf.d
+LDCONFIG := $(LDCONFDIR)/lkmisc.conf
+
+define update_ldconfig
+	sudo mkdir -p $(LDCONFDIR)
+	sudo touch $(LDCONFIG)
+
+	if ! grep -E "^${1}$$" $(LDCONFIG); then
+		echo ${1} | sudo tee -a $(LDCONFIG)
+		sudo ldconfig
 	fi
 endef
