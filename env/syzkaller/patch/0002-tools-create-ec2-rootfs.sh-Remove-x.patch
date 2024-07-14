@@ -1,0 +1,36 @@
+From acc53171f54c1264856bfd4e49e98282c251d9f6 Mon Sep 17 00:00:00 2001
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
+Date: Sat, 13 Jul 2024 19:43:55 +0000
+Subject: [PATCH 2/3] tools/create-ec2-rootfs.sh: Remove -x.
+
+When we want to show --help, the output is messed up.
+
+  $ ./create-ec2-rootfs.sh -h
+  ...
+  + display_help
+  + echo 'Usage: ./create-ec2-rootfs.sh [option...] '
+  Usage: ./create-ec2-rootfs.sh [option...]
+
+Let's remove unnecessary -x.
+
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+---
+ tools/create-ec2-rootfs.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tools/create-ec2-rootfs.sh b/tools/create-ec2-rootfs.sh
+index 1c713366b1aa..a452f516837f 100755
+--- a/tools/create-ec2-rootfs.sh
++++ b/tools/create-ec2-rootfs.sh
+@@ -28,7 +28,7 @@
+ #   ssh -o StrictHostKeyChecking=no -p 10022 root@localhost
+ #
+ 
+-set -eux
++set -eu
+ 
+ NAME="rootfs.ext4"
+ FORMAT="ext4"
+-- 
+2.40.1
+
