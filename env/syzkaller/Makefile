@@ -44,8 +44,16 @@ docker:
 build: update docker
 	cd $(BUILDDIR)
 	mkdir -p $$HOME/.cache
-	./tools/syz-env make -j $(shell nproc) clean
-	./tools/syz-env make -j $(shell nproc)
+
+	if [[ $(ARCH) =~ "aarch64" ]]; then
+		sudo dnf install -y go
+		make -j $(shell nproc) clean
+		make -j $(shell nproc)
+	else
+		./tools/syz-env make -j $(shell nproc) clean
+		./tools/syz-env make -j $(shell nproc)
+
+	fi
 
 install: build
 	if [[ $(ARCH) =~ "aarch64" ]]; then
