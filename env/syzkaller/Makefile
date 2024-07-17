@@ -2,7 +2,7 @@ include ../lib.mk
 
 .ONESHELL:
 
-.PHONY: all clone update __docker docker build install
+.PHONY: all clone update __docker docker build install dev
 
 all: install
 
@@ -65,3 +65,10 @@ install: build
 	sudo mkdir -p /usr/local/bin/$$ARCHDIR
 	sudo install -m 755 $(BUILDDIR)/bin/$$ARCHDIR/syz* /usr/local/bin/$$ARCHDIR
 	sudo install -m 755 $(BUILDDIR)/bin/syz* /usr/local/bin/
+
+define create_rootfs
+	$(BUILDDIR)/tools/create-ec2-rootfs.sh -s 2G -n ${1}/rootfs.ext4
+endef
+
+dev: update docker
+	$(call create_rootfs,$(BASEDIR))
