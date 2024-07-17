@@ -1,6 +1,9 @@
-.PHONY: all emacs
+.PHONY: all bashrc emacs
 
-all: emacs
+all: bashrc emacs
+
+bashrc:
+	$(MAKE) -C bashrc
 
 emacs:
 	$(MAKE) -C emacs
