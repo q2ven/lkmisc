@@ -13,5 +13,6 @@ syzkaller:
 	$(MAKE) -C syzkaller
 
 dev: clang qemu
+	$(MAKE) -C syzkaller dev
 	$(MAKE) -C linux dev
 	$(MAKE) -C dev
