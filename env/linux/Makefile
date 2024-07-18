@@ -2,7 +2,7 @@ include ../lib.mk
 
 .ONESHELL:
 
-.PHONY: all clone update
+.PHONY: all clone update worktree package dev
 
 all: update
 
@@ -24,3 +24,19 @@ clone:
 update: clone
 	cd $(LINUXDIR)
 	git fetch --all
+
+define create_worktree
+	if [ ! -d $(BASEDIR)/${1} ]; then
+		cd $(LINUXDIR)
+		git worktree add $(BASEDIR)/${1} -b ${1} ${2}
+	fi
+endef
+
+worktree: update
+	$(call create_worktree,net-next,net-next/main)
+	$(call create_worktree,net,net/main)
+
+package:
+	sudo dnf install -y bison elfutils-devel flex gcc ncurses-devel openssl-devel zlib-devel
+
+dev: worktree package
