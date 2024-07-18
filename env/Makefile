@@ -4,4 +4,5 @@ linux:
 	$(MAKE) -C linux
 
 dev:
+	$(MAKE) -C linux dev
 	$(MAKE) -C dev
