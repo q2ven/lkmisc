@@ -1,3 +1,6 @@
-.PHONY: all
+.PHONY: all emacs
 
-all:
+all: emacs
+
+emacs:
+	$(MAKE) -C emacs
