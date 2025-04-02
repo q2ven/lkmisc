@@ -73,13 +73,13 @@ function rec2-ssm() {
 
 function ral23() {
     NAME=$1
-    SSM_PATH="/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-x86_64"
+    SSM_PATH="/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.12-x86_64"
     rec2-ssm $NAME $SSM_PATH false
 }
 
 function ral23a() {
     NAME=$1
-    SSM_PATH="/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-arm64"
+    SSM_PATH="/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.12-arm64"
     rec2-ssm $NAME $SSM_PATH true
 }
 
